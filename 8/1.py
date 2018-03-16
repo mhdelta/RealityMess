@@ -3,30 +3,26 @@ import os
 import math
 
 
-def ToPantalla(centro, p):
-	x = centro[0] + p[0]
-	y = - p[1] + centro[1]
-	return (int(x), int(y))
-
-def ToCart(r, angle):
-	x = r * math.cos(angle)
-	y = r * math.sin(angle)
-	return (x, y)
-
 if __name__ == '__main__':
-
 	alto = 480
 	ancho = 600
 	pygame.init()
 	pantalla = pygame.display.set_mode([ancho, alto])
 	pygame.display.flip()
 	reloj  = pygame.time.Clock()
+	vader = pygame.image.load(os.path.join('../images', 'vader.png'))
+	fondo = pygame.image.load(os.path.join('../images', 'back.jpg'))
+
+
 	
 	#VARIABLES
 	Rojo = [255, 0, 0]
 	Negro = [0, 0, 0]
 	Verde = [0, 255, 0]
 	Azul = [0, 0, 255]
+	Negro = [0, 0, 0]
+	Gris = [191, 189, 191]
+	Blanco = [255, 255, 255]
 	punto = [100 ,100]
 	lista = []
 	fin = False
@@ -34,46 +30,17 @@ if __name__ == '__main__':
 	radio = 5
 	listaPuntos = []
 	centro = (ancho/2, alto/2)
-	lp = []
-	angle = 0
-	clock = 1
-	a = 200
-	n = 4
-	b = 5
 	
-	pygame.draw.line(pantalla, [0,0,255], [0, 240], [960, 240]) #X
-	pygame.draw.line(pantalla, [255,0,0], [300, 0], [300, 960]) #Y
-	
-	#Dibujar los puntos polares 
-	# p1 = ToCart(100, 45)
-	# print p1
-	# p1 = ToPantalla(centro, p1)
-	# print p1
-	# p2 = ToCart(100, 120)
-	# p2 = ToPantalla(centro, p2)
-	# p3 = ToCart(100, 210)
-	# p3 = ToPantalla(centro, p3)
+	clock = 300
+	posx = 2	
+	correr = False
+	posy = 0
 
-	# p4 = ToCart(100, 300)
-	# p4 = ToPantalla(centro, p4)
+	der = True
+	posvader = [190, 300]
 
-	# p5 = ToCart(100, 0)
-	# p5 = ToPantalla(centro, p5)
-
-	
-	# pygame.draw.circle(pantalla, Verde, p1, radio, 1)
-	# pygame.draw.circle(pantalla, Verde, p2, radio, 1)
-	# pygame.draw.circle(pantalla, Verde, p3, radio, 1)
-	# pygame.draw.circle(pantalla, Verde, p4, radio, 1)
-	# pygame.draw.circle(pantalla, Verde, p5, radio, 1)
-
-	
-	# listaPuntosPantalla = []
-	# for p in listaPuntos:
-	# 	np = ToPantalla(centro, p)
-	# 	listaPuntosPantalla.append(np)
-	
-
+	pantalla.blit(fondo, [posvader[0],-1400 - posvader[1]])
+	pygame.display.flip()
 	#CICLO PRINCIPAL
 	while not fin:
 		for event in pygame.event.get():
@@ -81,14 +48,40 @@ if __name__ == '__main__':
 				fin = True
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				print "click"
+
 			if event.type == pygame.KEYDOWN:	
 				if event.key == pygame.K_UP:
-					print "key up"
-		r = a * math.cos(n*angle)+b	
-		p = ToCart(r, angle)
-		p = ToPantalla(centro, p)
-		angle += 1
-		pygame.draw.circle(pantalla, Verde, p, radio-3, 1)
+					vel_y = -1
+				if event.key == pygame.K_DOWN:
+					vel_y = 1
+				if event.key == pygame.K_LEFT:
+					posvader[0] += -10
+				if event.key == pygame.K_RIGHT:
+					posvader[0] += 10	
+
+
+
+
+		pantalla.blit(vader, posvader)
 		pygame.display.flip()
-				
+
+		if posvader[0] > 400:
+			pantalla.blit(fondo, [posx,-1400 - posy])
+			pygame.display.flip()
+			posx += -3
+			print pygame.mouse.get_pos()
+		elif posvader[0] < 100:
+			pantalla.blit(fondo, [posx,-1400 -posy])
+			pygame.display.flip()
+			posx += 3
+		elif posvader[1] < 100:
+			pantalla.blit(fondo, [posx,-1400 - posy])
+			pygame.display.flip()
+			posy += -3 
+		elif posvader[1] > 380:
+			pantalla.blit(fondo, [posx,-1400 - posy])
+			pygame.display.flip()
+			posy += 3 
+
+		pygame.display.flip()
 		reloj.tick(clock)		
