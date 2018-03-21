@@ -14,6 +14,11 @@ import math
 
 '''
 
+def DibujarPlanoCart():
+	pygame.draw.line(pantalla, [0,0,255], [0, 240], [960, 240]) #X
+	pygame.draw.line(pantalla, [255,0,0], [300, 0], [300, 960]) #Y
+	pygame.display.flip()
+	
 
 def ToPantalla(centro, p):
 	x = centro[0] + p[0]

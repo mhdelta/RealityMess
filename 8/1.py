@@ -10,9 +10,9 @@ if __name__ == '__main__':
 	pantalla = pygame.display.set_mode([ancho, alto])
 	pygame.display.flip()
 	reloj  = pygame.time.Clock()
-	vader = pygame.image.load(os.path.join('../images', 'vader.png'))
+	vader = pygame.image.load(os.path.join('../images', 'char.png'))
 	fondo = pygame.image.load(os.path.join('../images', 'back.jpg'))
-
+	vader = pygame.transform.scale(vader, (100, 100))
 
 	
 	#VARIABLES
@@ -39,6 +39,7 @@ if __name__ == '__main__':
 	der = True
 	posvader = [190, 300]
 
+
 	pantalla.blit(fondo, [posvader[0],-1400 - posvader[1]])
 	pygame.display.flip()
 	#CICLO PRINCIPAL
@@ -51,37 +52,28 @@ if __name__ == '__main__':
 
 			if event.type == pygame.KEYDOWN:	
 				if event.key == pygame.K_UP:
-					vel_y = -1
+					posvader[1] += -10
 				if event.key == pygame.K_DOWN:
-					vel_y = 1
+					posvader[1] += 10
 				if event.key == pygame.K_LEFT:
 					posvader[0] += -10
 				if event.key == pygame.K_RIGHT:
 					posvader[0] += 10	
 
 
-
-
+		pantalla.blit(fondo, [posx,-1400 - posy])									
 		pantalla.blit(vader, posvader)
 		pygame.display.flip()
 
 		if posvader[0] > 400:
-			pantalla.blit(fondo, [posx,-1400 - posy])
-			pygame.display.flip()
-			posx += -3
+			posx += -0.5
 			print pygame.mouse.get_pos()
 		elif posvader[0] < 100:
-			pantalla.blit(fondo, [posx,-1400 -posy])
-			pygame.display.flip()
-			posx += 3
+			posx += 0.5
 		elif posvader[1] < 100:
-			pantalla.blit(fondo, [posx,-1400 - posy])
-			pygame.display.flip()
-			posy += -3 
+			posy += -0.5 
 		elif posvader[1] > 380:
-			pantalla.blit(fondo, [posx,-1400 - posy])
-			pygame.display.flip()
-			posy += 3 
+			posy += 0.5 
 
 		pygame.display.flip()
 		reloj.tick(clock)		
