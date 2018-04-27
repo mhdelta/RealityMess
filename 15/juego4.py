@@ -81,7 +81,6 @@ class Barril(pygame.sprite.Sprite,):
 		self.rect = self.image.get_rect()
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]
-		self.sonido = pygame.mixer.Sound('punch2.wav')
 
 
 
@@ -125,10 +124,6 @@ if __name__ == '__main__':
 	i=0
 	ls_col = []
 
-	musica_fondo = pygame.mixer.Sound('fondo.ogg')
-	musica_fondo.set_volume(0.5)
-	musica_fondo.play()
-
 	#CICLO PRINCIPAL
 	while not fin:
 
@@ -156,7 +151,6 @@ if __name__ == '__main__':
 			ls_col = pygame.sprite.spritecollide(jugador, barriles, False)
 			for b in ls_col:
 				b.rect.x += 10
-				b.sonido.play()
 
 
 		#REFRESCO DE PANTALLA

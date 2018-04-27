@@ -50,7 +50,9 @@ if __name__ == '__main__':
 	
 	centro = (ancho/2, alto/2)
 	imagen = pygame.image.load('animals.png')
-	#pantalla.blit(imagen, [0, 0]) 
+
+
+	fondo = pygame.image.load('../images/mapas_tiled.png')
 
 	info = imagen.get_rect()
 	ancho_img = info[2]
@@ -106,6 +108,7 @@ if __name__ == '__main__':
 
 	#CICLO PRINCIPAL
 	while not fin:
+		pantalla.blit(fondo, [0,0])
 
 		#Gestion de eventos
 		for event in pygame.event.get():
@@ -113,25 +116,21 @@ if __name__ == '__main__':
 				fin = True
 			if event.type == pygame.KEYDOWN:	
 				if event.key == pygame.K_RIGHT:
-					pantalla.fill(Negro)
 					pantalla.blit(derecha[indice_caminar], [px, py])
 					indice_caminar += 1
-					px += 5
+					px += 10
 				if event.key == pygame.K_DOWN:
-					pantalla.fill(Negro)
 					pantalla.blit(abajo[indice_caminar], [px, py])
 					indice_caminar += 1
-					py += 5
+					py += 10
 				if event.key == pygame.K_UP:
-					pantalla.fill(Negro)
 					pantalla.blit(arriba[indice_caminar], [px, py])
 					indice_caminar += 1
-					py += -5
+					py += -10
 				if event.key == pygame.K_LEFT:
-					pantalla.fill(Negro)
 					pantalla.blit(izquierda[indice_caminar], [px, py])
 					indice_caminar += 1
-					px += -5
+					px += -10
 					
 			
 

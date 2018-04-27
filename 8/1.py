@@ -4,14 +4,14 @@ import math
 
 
 if __name__ == '__main__':
-	alto = 480
-	ancho = 600
+	alto = 1000
+	ancho = 1000
 	pygame.init()
 	pantalla = pygame.display.set_mode([ancho, alto])
 	pygame.display.flip()
 	reloj  = pygame.time.Clock()
 	vader = pygame.image.load(os.path.join('../images', 'char.png'))
-	fondo = pygame.image.load(os.path.join('../images', 'back.jpg'))
+	fondo = pygame.image.load(os.path.join('../images', 'mapas_tiled.png'))
 	vader = pygame.transform.scale(vader, (100, 100))
 
 	
