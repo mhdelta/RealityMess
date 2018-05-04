@@ -41,7 +41,7 @@ class Jugador(pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
 		self.accion = 1
-		self.image =  pygame.image.load('soldier160x205.png')
+		self.image = pygame.image.load('soldier160x205.png')
 		self.image = pygame.transform.scale(self.image, (50,50))
 		self.rect = self.image.get_rect()
 		self.i = 0
@@ -66,6 +66,12 @@ class Jugador(pygame.sprite.Sprite):
 			self.image = pygame.transform.rotate(self.tmp, 0)
 		if self.dir == 5:
 			self.image = pygame.transform.rotate(self.tmp, -45)
+		if self.dir == 6:
+			self.image = pygame.transform.rotate(self.tmp, 45)
+		if self.dir == 7:
+			self.image = pygame.transform.rotate(self.tmp, -135)
+		if self.dir == 8:
+			self.image = pygame.transform.rotate(self.tmp, 135)
 		#control de accion
 
 		# if self.accion == 2:
@@ -129,41 +135,59 @@ if __name__ == '__main__':
 	ls_col = []
 
 	#Direcciones
+	Dir = [0,0,0,0]
 	right = False
 	up = False
 
 	#CICLO PRINCIPAL
 	while not fin:
-
+		if Dir == [1,0,0,0]:
+			jugador.dir = 1
+		if Dir == [0,1,0,0]:
+			jugador.dir = 2
+		if Dir == [0,0,1,0]:
+			jugador.dir = 3
+		if Dir == [0,0,0,1]:
+			jugador.dir = 4
+		if Dir == [1,0,0,1]:
+			jugador.dir = 5
+		if Dir == [0,1,0,1]:
+			jugador.dir = 6
+		if Dir == [1,0,1,0]:
+			jugador.dir = 7
+		if Dir == [0,1,1,0]:
+			jugador.dir = 8									
 		#Gestion de eventos
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				fin = True
 			if event.type == pygame.KEYDOWN:	
 				if event.key == pygame.K_RIGHT:
-					jugador.dir = 1
 					jugador.vel_x = 10
-					right = True
+					Dir[0] = 1
 				if event.key == pygame.K_LEFT:
 					jugador.vel_x = -10
-					jugador.dir = 2
-					right = False
+					Dir[1] = 1
 				if event.key == pygame.K_DOWN:
 					jugador.vel_y = 10
-					jugador.dir = 3
-					up = False				
+					Dir[2] = 1
 				if event.key == pygame.K_UP:
 					jugador.vel_y = -10
-					jugador.dir = 4
-					up = True
+					Dir[3] = 1
 				if event.key == pygame.K_q:
 					fin = True
 			if event.type == pygame.KEYUP:
-				jugador.dir = 0
+				if event.key == pygame.K_UP:
+					Dir[3] = 0
+				if event.key == pygame.K_DOWN:
+					Dir[2] = 0
+				if event.key == pygame.K_RIGHT:
+					Dir[0] = 0
+				if event.key == pygame.K_LEFT:
+					Dir[1] = 0
 				jugador.vel_x = 0
 				jugador.vel_y = 0
-				up = False
-				right = False
+
 
 		#Logica del juegO
 
@@ -173,8 +197,7 @@ if __name__ == '__main__':
 				b.rect.x += 10
 
 		#REFRESCO DE PANTALLA
-		if up and right:
-			jugador.dir = 5
+		
 
 		todos.update()
 		pantalla.blit(fondo, (0,0))
