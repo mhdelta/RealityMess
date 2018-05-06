@@ -50,8 +50,6 @@ class Bala(pygame.sprite.Sprite):
 		self.rect.x = 0
 		self.vel_x = 10
 		#self.vel_y = 0
-
-
 	def update(self):
 		self.rect.x += self.vel_x
 

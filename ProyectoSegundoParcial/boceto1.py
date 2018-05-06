@@ -51,7 +51,7 @@ class Jugador(pygame.sprite.Sprite):
 		self.tmp = self.image
 		self.vel_x = 0
 		self.vel_y = 0
-
+		self.salud = 5
 	def update(self):
 		self.rect.x += self.vel_x
 		self.rect.y += self.vel_y
@@ -72,18 +72,39 @@ class Jugador(pygame.sprite.Sprite):
 			self.image = pygame.transform.rotate(self.tmp, -135)
 		if self.dir == 8:
 			self.image = pygame.transform.rotate(self.tmp, 135)
-		#control de accion
 
-		# if self.accion == 2:
-		# 	self.i += 1
-		# 	if self.i >= len(self.m[self.accion]):
-		# 		self.i = 0
-		# 		self.accion = 1
-		# else:
-		# 	self.i += 1
-		# 	if self.i >= len(self.m[self.accion]):
-		# 		self.i = 0
-		# self.image = self.m[self.accion][self.i]
+
+
+class Juger(pygame.sprite.Sprite):
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.accion = 1
+		self.image = pygame.image.load('soldier160x205.png')
+		self.image = pygame.transform.scale(self.image, (60,60))
+		self.rect = self.image.get_rect()
+		self.i = 0
+		self.rect.x = 10
+		self.rect.y = - 2000
+		self.dir = 0
+		self.tmp = self.image
+		self.vel_x = 7
+		self.vel_y = 7
+		self.cont = 0
+	def update(self):
+		self.rect.x += self.vel_x
+		self.rect.y += self.vel_y
+		if self.cont > 25:
+			self.disparar()
+			self.cont = 0
+		self.cont += 1
+	def disparar(self):
+		for i in range(1, 8):
+			b = Bala_enemiga()
+			b.rect.x = self.rect.x 
+			b.rect.y = self.rect.y
+			b.dire = i
+			balas_enemigas.add(b)
+			todos.add(b)
 
 class Barril(pygame.sprite.Sprite,):
 	def __init__(self, anchoM, altoM, pos):
@@ -94,15 +115,90 @@ class Barril(pygame.sprite.Sprite,):
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]
 
+class Bala(pygame.sprite.Sprite):
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.Surface([5, 5])
+		self.image.fill(Verde)
+		self.rect = self.image.get_rect()
+		self.vel_x = 0
+		self.vel_y = 0
+		self.dire = 0
+	def update(self):
+		if self.dire == 1:
+			self.vel_x = 25
+			self.vel_y = 0
+		if self.dire == 2:
+			self.vel_x = -25
+			self.vel_y = 0
+		if self.dire == 3:
+			self.vel_x = 0
+			self.vel_y = 25 
+		if self.dire == 4:
+			self.vel_x = 0
+			self.vel_y = -25
+		if self.dire == 5:
+			self.vel_x = 25
+			self.vel_y = -25
+		if self.dire == 6:
+			self.vel_x = -25
+			self.vel_y = -25
+		if self.dire == 7:
+			self.vel_x = 25
+			self.vel_y = 25
+		if self.dire == 8:
+			self.vel_x = -25
+			self.vel_y = 25
+		self.rect.x += self.vel_x	
+		self.rect.y += self.vel_y	
+
+class Bala_enemiga(pygame.sprite.Sprite):
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self)
+		self.image = pygame.Surface([5, 5])
+		self.image.fill(Rojo)
+		self.rect = self.image.get_rect()
+		self.vel_x = 0
+		self.vel_y = 0
+		self.dire = 0
+	def update(self):
+		if self.dire == 1:
+			self.vel_x = 25
+			self.vel_y = 0
+		if self.dire == 2:
+			self.vel_x = -25
+			self.vel_y = 0
+		if self.dire == 3:
+			self.vel_x = 0
+			self.vel_y = 25 
+		if self.dire == 4:
+			self.vel_x = 0
+			self.vel_y = -25
+		if self.dire == 5:
+			self.vel_x = 25
+			self.vel_y = -25
+		if self.dire == 6:
+			self.vel_x = -25
+			self.vel_y = -25
+		if self.dire == 7:
+			self.vel_x = 25
+			self.vel_y = 25
+		if self.dire == 8:
+			self.vel_x = -25
+			self.vel_y = 25
+		self.rect.x += self.vel_x	
+		self.rect.y += self.vel_y	
+
+
 if __name__ == '__main__':
-	alto = 480
-	ancho = 600
+	alto = 500
+	ancho = 700
 	pygame.init()
 	pantalla = pygame.display.set_mode([700, 500])
 	reloj  = pygame.time.Clock()
-	fondo = pygame.image.load('background.png')
+	fondo = pygame.image.load('backgroundConMuros.png')
 
-	
+	fuente = pygame.font.Font(None, 32)
 	centro = (ancho/2, alto/2)
 	limites = [1,1]
 	# m = RecortarMatriz([20, 20], 'soldier160x205.png', limites)
@@ -114,20 +210,26 @@ if __name__ == '__main__':
 	
 
 	#Grupos
-
+	balas = pygame.sprite.Group()
+	balas_enemigas = pygame.sprite.Group()
 	jugadores = pygame.sprite.Group()
 	barriles = pygame.sprite.Group()
+	enemigos = pygame.sprite.Group()
 	todos = pygame.sprite.Group()
 
 
 	# Objetos
 
-	barril = Barril(30, 80, [200,200])
-	barriles.add(barril)
-	todos.add(barril)
+	# barril = Barril(30, 80, [200,200])
+	# barriles.add(barril)
+	# todos.add(barril)
 	jugador = Jugador()
 	jugadores.add(jugador)
 	todos.add(jugador)
+
+	juger = Juger()
+	enemigos.add(juger)
+	todos.add(juger)
 
 	px = 0
 	py = 0
@@ -138,6 +240,9 @@ if __name__ == '__main__':
 	Dir = [0,0,0,0]
 	right = False
 	up = False
+
+	fondox = 0
+	fondoy = -2485
 
 	#CICLO PRINCIPAL
 	while not fin:
@@ -176,6 +281,22 @@ if __name__ == '__main__':
 					Dir[3] = 1
 				if event.key == pygame.K_q:
 					fin = True
+				###########################
+
+				if event.key == pygame.K_SPACE:
+					b = Bala()
+					b.rect.x = jugador.rect.x + 25 
+					b.rect.y = jugador.rect.y + 25
+					if jugador.dir == 5:
+						b.rect.y += 20
+					if jugador.dir == 3:
+						b.rect.x -= 10
+					if jugador.dir == 2:
+						b.rect.y -= 10
+					b.dire = jugador.dir
+					balas.add(b)
+					todos.add(b)
+
 			if event.type == pygame.KEYUP:
 				if event.key == pygame.K_UP:
 					Dir[3] = 0
@@ -185,10 +306,10 @@ if __name__ == '__main__':
 					Dir[0] = 0
 				if event.key == pygame.K_LEFT:
 					Dir[1] = 0
-				jugador.vel_x = 0
-				jugador.vel_y = 0
-
-
+				if event.key != pygame.K_SPACE:
+					jugador.vel_x = 0
+					jugador.vel_y = 0
+					
 		#Logica del juegO
 
 		if jugador.accion == 2:
@@ -196,12 +317,81 @@ if __name__ == '__main__':
 			for b in ls_col:
 				b.rect.x += 10
 
-		#REFRESCO DE PANTALLA
+		for b in balas:
+			if b.rect.x > ancho + 4000 or b.rect.x < - 4000:
+				balas.remove(b)
+				todos.remove(b)
+			if b.rect.y > alto + 4000 or b.rect.y < -4000:
+				balas.remove(b)
+				todos.remove(b)
+
+		for e in enemigos:
+			if e.rect.x > ancho + 4000 or e.rect.x < - 4000:
+				enemigos.remove(e)
+				todos.remove(e)
+			if e.rect.y > alto + 4000 or e.rect.y < -4000:
+				enemigos.remove(e)
+				todos.remove(e)
 		
+		for b in balas:
+			col = pygame.sprite.spritecollide(b, enemigos, True)
+		
+		for b in balas_enemigas:
+			ls_col_ebalas = pygame.sprite.spritecollide(b, jugadores, False)
 
-		todos.update()
-		pantalla.blit(fondo, (0,0))
-		todos.draw(pantalla)
+			if jugador in ls_col_ebalas:
+				balas_enemigas.remove(b)
+				todos.remove(b)
+				jugador.salud -= 1
+				print "Salud: ", jugador.salud
 
+		#REFRESCO DE PANTALLA
+		if jugador.salud > 0:
+			todos.update()
+			if fondox >= 0:
+				fondox = 0
+			if fondoy >= -10:
+				fondoy = -10
+			if fondox <= -3270:
+				fondox = -3270
+			if fondoy <= -2485:
+				fondoy = -2485
+			
+			pantalla.blit(fondo,(fondox,fondoy))
+			texto = fuente.render("Salud Jugador 1:", False, Blanco)
+			txt_valor = fuente.render(str(jugador.salud), False, Blanco)	
+			pantalla.blit(texto, [50, 10])
+			pantalla.blit(txt_valor, [250, 10])
+			print fondox , ",", fondoy
+			if jugador.rect.x < 150:
+				fondox += 15
+				for e in enemigos:
+					if fondox <= -100:
+						e.rect.x += 15
+				jugador.rect.x = 150
+			if jugador.rect.x > 550:
+				fondox -= 15
+				for e in enemigos:
+					if fondox >= -3265:
+						e.rect.x -= 15
+				jugador.rect.x = 550
+			if jugador.rect.y < 150:
+				fondoy += 15
+				for e in enemigos:
+					if fondoy <= -100:
+						e.rect.y += 15
+				jugador.rect.y = 150			
+			if jugador.rect.y > 350:
+				fondoy -= 15
+				for e in enemigos:
+					if fondoy >= -2480:
+						e.rect.y -= 15	
+				jugador.rect.y = 350			
+			todos.draw(pantalla)
+		else:
+			pantalla.fill(Negro)
+			fuente2 = pygame.font.Font(None, 50)
+			texto = fuente2.render("HAS MUERTO", False, Rojo)
+			pantalla.blit(texto, [ancho/2 - 100, alto/2 - 50])
 		pygame.display.flip()	
 		reloj.tick(clock)		

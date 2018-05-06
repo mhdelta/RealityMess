@@ -235,8 +235,8 @@ if __name__ == '__main__':
 
 		texto = fuente.render("Salud ", False, Blanco)
 		txt_valor = fuente.render(str(jugador.salud), False, Blanco)	
-		pantalla.blit(texto, [50, 10])
-		pantalla.blit(txt_valor, [150, 10])
+		pantalla.blit(texto, [30, 10])
+		pantalla.blit(txt_valor, [1000, 10])
 
 		todos.draw(pantalla)
 		pygame.display.flip()	

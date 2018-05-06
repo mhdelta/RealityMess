@@ -76,10 +76,6 @@ if __name__ == '__main__':
 
 	# Objetos
 
-	
-
-
-
 	px = 0
 	py = 0
 	i=0

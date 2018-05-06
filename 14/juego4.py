@@ -107,6 +107,7 @@ if __name__ == '__main__':
 	barriles = pygame.sprite.Group()
 	todos = pygame.sprite.Group()
 
+	
 
 	# Objetos
 
