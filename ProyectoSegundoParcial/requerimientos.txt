@@ -8,7 +8,7 @@ SOLO TIENE UN NIVEL
 
 2. Juego para dos jugadores 10%
 
-3. 2 tipos de enemigos, deben aparecer minimo 3 de cada uno. deben aparecer continuamente comportamiento y apariencia claramente 
+3. 3 tipos de enemigos, deben aparecer minimo 3 de cada uno. deben aparecer continuamente comportamiento y apariencia claramente 
 diferenciado 40%
 
 4. La salud de ambos jugadores debe ser visible siempre y debe actualizarse con las circunstancias 10%
