@@ -229,9 +229,9 @@ class Mina(pygame.sprite.Sprite):
 class Pocion(pygame.sprite.Sprite):
 	def __init__(self, pos):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.Surface([10, 10])
+		self.image = pygame.Surface([50, 50])
 		self.image.fill(Negro)
-		self.image = pygame.transform.scale(self.image, (7,7))
+		self.image = pygame.transform.scale(self.image, (50,50))
 		self.rect = self.image.get_rect()
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]
@@ -239,12 +239,16 @@ class Pocion(pygame.sprite.Sprite):
 	def update(self):
 		if self.tipo == 0:
 			self.image = pygame.image.load('potiVerde.png')
+			self.image = pygame.transform.scale(self.image, (50,50))
 		if self.tipo == 1:
 			self.image = pygame.image.load('potiAzul.png')
+			self.image = pygame.transform.scale(self.image, (50,50))			
 		if self.tipo == 2:
 			self.image = pygame.image.load('potiRoja.png')
+			self.image = pygame.transform.scale(self.image, (50,50))			
 		if self.tipo == 3:
 			self.image = pygame.image.load('potiamarilla.png')
+			self.image = pygame.transform.scale(self.image, (50,50))			
 
 		# Collition
 
@@ -450,8 +454,8 @@ if __name__ == '__main__':
 	level = [
 	"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 	"W  0   0      0   3  0   0   W      W",
-	"W 0   0 m  WWWWWW    0   0   m      W",
-	"W 0 WWWW  2    W     0   W    WW    W",
+	"W     0 m  WWWWWW    0   0   m      W",
+	"W   WWWW  2    W     0   W    WW    W",
 	"Wm  W   0   m WWWW   0   0     m    W",
 	"W   W  WWWW    2     2   2   W W  W W",
 	"W 0 W  3  W W  m     W   0          W",
@@ -500,9 +504,6 @@ if __name__ == '__main__':
 			x += 100
 		y += 100
 		x = 0
-
-	global jugador
-	global jugador2
 
 	nom_imagen = 'soldier160x205.png'
 	jugador = Jugador(nom_imagen)
@@ -875,7 +876,7 @@ if __name__ == '__main__':
 				if jugador.rect.y < 150:
 					fondoy += 15
 					for m in minas:
-						m.rect.x += 15
+						m.rect.y += 15
 					for p in pociones:
 						p.rect.y += 15
 					for m in muros:
@@ -962,7 +963,7 @@ if __name__ == '__main__':
 				texto = fuente.render("MUERTO", False, Rojo)
 				pantalla.blit(texto, [500, 10])
 			fuente3 = pygame.font.Font(None, 50)
-			sec_restantes = 70 - (pygame.time.get_ticks()/1000)
+			sec_restantes = 120 - (pygame.time.get_ticks()/1000)
 			if sec_restantes >= 20:
 				texto4 = fuente3.render("Tiempo restante: ", False, Blanco)		
 				pantalla.blit(texto4, [50, 50])
