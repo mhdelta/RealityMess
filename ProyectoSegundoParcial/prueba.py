@@ -43,11 +43,12 @@ def RecortarMatriz (sprites, nombre_img, limites):
 
 
 class Jugador(pygame.sprite.Sprite):
-	def __init__(self, m):
+	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
 		self.accion = 1
 		self.m = m
-		self.image = m[self.accion][0]
+		self.m = RecortarMatriz([5, 7], 'blood.png', [5, 5, 5, 5, 5, 5, 3])					
+		self.image = self.m[self.accion][0]
 		self.rect = self.image.get_rect()
 		self.i = 0
 		self.rect.x = 100
@@ -55,28 +56,30 @@ class Jugador(pygame.sprite.Sprite):
 
 		self.vel_x = 0
 		self.vel_y = 0
+		self.fila = 0
+		self.col = 0
+
 
 	def update(self):
 		self.rect.x += self.vel_x
 		self.rect.y += self.vel_y
-
-		#control de accion
-
-		if self.accion == 2:
-			self.i += 1
-			if self.i >= len(self.m[self.accion]):
-				self.i = 0
-				self.accion = 1
+		if self.fila == 0:
+			self.fila = 3
 		else:
-			self.i += 1
-			if self.i >= len(self.m[self.accion]):
-				self.i = 0
-		self.image = self.m[self.accion][self.i]
+			self.fila -=1
+		if self.col == 0:
+			self.col = 3
+		else:
+			self.col -=1
+		self.image = self.m[self.fila][self.col]
+		print 'fila: ', self.fila, 'col: ', self.col
+
 
 class Barril(pygame.sprite.Sprite,):
 	def __init__(self, anchoM, altoM, pos):
 		pygame.sprite.Sprite.__init__(self)
-		self.image = pygame.image.load('mina.png')
+		self.image = pygame.Surface([anchoM, altoM])
+		self.image.fill(Blanco)
 		self.rect = self.image.get_rect()
 		self.rect.x = pos[0]
 		self.rect.y = pos[1]
@@ -113,7 +116,7 @@ if __name__ == '__main__':
 	barril = Barril(30, 80, [200,200])
 	barriles.add(barril)
 	todos.add(barril)
-	jugador = Jugador(m)
+	jugador = Jugador()
 	jugadores.add(jugador)
 	todos.add(jugador)
 
